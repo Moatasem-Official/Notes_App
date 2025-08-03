@@ -16,9 +16,7 @@ class NotesCubit extends Cubit<NotesCubitState> {
 
       emit(NotesActionSuccess("تمت الإضافة بنجاح"));
 
-      emit(
-        NotesCubitSuccess(List.from(notesBox.values)),
-      ); // هنا دي هي updatedNotes
+      emit(NotesCubitSuccess(List.from(notesBox.values)));
     } catch (e) {
       emit(NotesCubitError("فشل في الإضافة"));
     }

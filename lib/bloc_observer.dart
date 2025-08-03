@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class BlocObserverClass implements BlocObserver {
   @override
   void onChange(BlocBase bloc, Change change) {
-    debugPrint('Failed : $change');
+    debugPrint('$change');
   }
 
   @override
