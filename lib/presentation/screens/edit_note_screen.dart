@@ -25,6 +25,30 @@ class EditNoteScreen extends StatelessWidget {
           ),
         ],
       ),
+      body: Column(
+        children: [
+          const SizedBox(height: 30),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
+            child: TextField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Tilte',
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 16, right: 16),
+            child: TextField(
+              maxLines: 5,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Content',
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
