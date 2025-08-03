@@ -2,11 +2,13 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:note_app/data/models/note_model.dart';
 import 'package:note_app/presentation/screens/home_screen.dart';
 
 void main() async {
   await Hive.initFlutter();
   await Hive.openBox('notes_box');
+  Hive.registerAdapter(NoteModelAdapter());
   runApp(DevicePreview(enabled: !kReleaseMode, builder: (context) => MyApp()));
 }
 
