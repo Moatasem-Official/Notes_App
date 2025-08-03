@@ -18,46 +18,42 @@ class NotesCubit extends Cubit<NotesCubitState> {
 
       emit(NotesCubitSuccess(List.from(notesBox.values)));
     } catch (e) {
-      emit(NotesCubitError("فشل في الإضافة"));
+      emit(NotesActionError("فشل في الإضافة"));
     }
   }
 
-  // Future<void> deleteNote(NoteModel note) async {
-  //   emit(NotesActionInProgress());
-  //   try {
-  //     await notesRepository.deleteNote(note); // حذف من الداتا
+  Future<void> getNotes() async {
+    emit(NotesCubitLoading());
+    try {
+      var notesBox = Hive.box<NoteModel>('notes_box');
+      emit(NotesCubitSuccess(List.from(notesBox.values)));
+    } catch (e) {
+      emit(NotesCubitError("فشل في جلب البيانات"));
+    }
+  }
 
-  //     notes.remove(note); // نحذفها من القائمة اللي عندنا
-  //     emit(NotesActionSuccess("تم الحذف بنجاح"));
+  Future<void> deleteNote(NoteModel note) async {
+    emit(NotesActionInProgress());
+    try {
+      var notesBox = Hive.box<NoteModel>('notes_box');
+      await notesBox.delete(note.key);
+      emit(NotesActionSuccess("تم الحذف بنجاح"));
+      emit(NotesCubitSuccess(List.from(notesBox.values)));
+    } catch (e) {
+      emit(NotesActionError("فشل في الحذف"));
+    }
+  }
 
-  //     emit(NotesCubitSuccess(List.from(notes))); // دي برضه updatedNotes
-  //   } catch (e) {
-  //     emit(NotesCubitError("فشل في الحذف"));
-  //   }
-  // }
-
-  // Future<void> updateNote(NoteModel note) async {
-  //   emit(NotesActionInProgress());
-  //   try {
-  //     await notesRepository.updateNote(note); // تحديث في الداتا سورس
-
-  //     notes.remove(note); // نحذفها من القائمة اللي عندنا
-  //     notes.add(note); // نضيفها للقائمة اللي عندنا
-  //     emit(NotesActionSuccess("تم التحديث بنجاح"));
-
-  //     emit(NotesCubitSuccess(List.from(notes))); // دي برضه updatedNotes
-  //   } catch (e) {
-  //     emit(NotesCubitError("فشل في التحديث"));
-  //   }
-
-  //   Future<void> getNotes() async {
-  //     emit(NotesCubitLoading());
-  //     try {
-  //       notes = await notesRepository.getNotes(); // تحديث في الداتا سورس
-  //       emit(NotesCubitSuccess(List.from(notes))); // دي برضه updatedNotes
-  //     } catch (e) {
-  //       emit(NotesCubitError("فشل في التحديث"));
-  //     }
-  //   }
-  // }
+  Future<void> updateNote(NoteModel note) async {
+    emit(NotesActionInProgress());
+    try {
+      await note.save(); // ✅ يحدث النوت مباشرة
+      emit(NotesActionSuccess("تم التحديث بنجاح"));
+      emit(
+        NotesCubitSuccess(List.from(Hive.box<NoteModel>('notes_box').values)),
+      );
+    } catch (e) {
+      emit(NotesActionError("فشل في التحديث"));
+    }
+  }
 }
