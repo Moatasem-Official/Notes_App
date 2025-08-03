@@ -8,7 +8,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Notes App'),
+        title: Text('Notes'),
         surfaceTintColor: Colors.black,
         actions: [
           Padding(
@@ -27,7 +27,70 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            builder: (context) {
+              return SizedBox(
+                width: double.infinity,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 16),
+                    Text(
+                      'Add New Note',
+                      style: TextStyle(
+                        color: Colors.deepPurple,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Tilte',
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16, right: 16),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Content',
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 100),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16, right: 16),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(16)),
+                        child: MaterialButton(
+                          minWidth: double.infinity,
+                          padding: const EdgeInsets.all(16),
+                          color: Colors.deepPurple,
+                          onPressed: () {},
+                          child: Text(
+                            'Add Note',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        },
         child: Icon(Icons.add, color: Colors.black),
       ),
       body: SingleChildScrollView(
