@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:note_app/presentation/screens/edit_note_screen.dart';
 import 'package:note_app/presentation/widgets/Home_Screen/custom_note_card.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -31,61 +32,65 @@ class HomeScreen extends StatelessWidget {
           showModalBottomSheet(
             context: context,
             builder: (context) {
-              return SizedBox(
-                width: double.infinity,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const SizedBox(height: 16),
-                    Text(
-                      'Add New Note',
-                      style: TextStyle(
-                        color: Colors.deepPurple,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    const SizedBox(height: 30),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Tilte',
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 16, right: 16),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Content',
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 100),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 16, right: 16),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(16)),
-                        child: MaterialButton(
-                          minWidth: double.infinity,
-                          padding: const EdgeInsets.all(16),
+              return SingleChildScrollView(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 16),
+                      Text(
+                        'Add New Note',
+                        style: TextStyle(
                           color: Colors.deepPurple,
-                          onPressed: () {},
-                          child: Text(
-                            'Add Note',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(height: 30),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
+                        child: TextField(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Tilte',
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16, right: 16),
+                        child: TextField(
+                          maxLines: 5,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Content',
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 100),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16, right: 16),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(16)),
+                          child: MaterialButton(
+                            minWidth: MediaQuery.of(context).size.width,
+                            padding: const EdgeInsets.all(16),
+                            color: Colors.deepPurple,
+                            onPressed: () {},
+                            child: Text(
+                              'Add Note',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 16),
+                    ],
+                  ),
                 ),
               );
             },
@@ -104,7 +109,10 @@ class HomeScreen extends StatelessWidget {
               content: 'Hello From My Notes App Now !',
               date: DateTime.now().toString(),
               onDelete: () {},
-              onTap: () {},
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => EditNoteScreen()),
+              ),
             );
           },
         ),
