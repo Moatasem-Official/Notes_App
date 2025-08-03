@@ -1,51 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:note_app/presentation/widgets/custom_app_bar.dart';
+import 'package:note_app/presentation/widgets/custom_text_field.dart';
 
-class EditNoteScreen extends StatelessWidget {
+class EditNoteScreen extends StatefulWidget {
   const EditNoteScreen({super.key});
+
+  @override
+  State<EditNoteScreen> createState() => _EditNoteScreenState();
+}
+
+class _EditNoteScreenState extends State<EditNoteScreen> {
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController contentController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Edit Note'),
-        surfaceTintColor: Colors.black,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: Container(
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(66, 75, 75, 75),
-                borderRadius: BorderRadius.all(Radius.circular(16)),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Icon(Icons.check, color: Colors.white),
-              ),
-            ),
-          ),
-        ],
+      appBar: PreferredSize(
+        preferredSize: Size(double.infinity, 60),
+        child: CustomAppBar(
+          title: 'Edit Note',
+          icon: Icons.check,
+          onTap: () {},
+        ),
       ),
       body: Column(
         children: [
           const SizedBox(height: 30),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
-            child: TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Tilte',
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 16, right: 16),
-            child: TextField(
-              maxLines: 5,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Content',
-              ),
-            ),
+          CustomTextField(controller: titleController, labelText: 'Title'),
+          const SizedBox(height: 16),
+          CustomTextField(
+            controller: contentController,
+            labelText: 'Content',
+            maxLines: 5,
           ),
         ],
       ),
