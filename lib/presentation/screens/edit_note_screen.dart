@@ -10,8 +10,9 @@ class EditNoteScreen extends StatefulWidget {
 }
 
 class _EditNoteScreenState extends State<EditNoteScreen> {
-  final TextEditingController titleController = TextEditingController();
-  final TextEditingController contentController = TextEditingController();
+  TextEditingController titleController = TextEditingController();
+  TextEditingController contentController = TextEditingController();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -21,20 +22,40 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
         child: CustomAppBar(
           title: 'Edit Note',
           icon: Icons.check,
-          onTap: () {},
+          onTap: () {
+            if (formKey.currentState!.validate()) {}
+          },
         ),
       ),
-      body: Column(
-        children: [
-          const SizedBox(height: 30),
-          CustomTextField(controller: titleController, labelText: 'Title'),
-          const SizedBox(height: 16),
-          CustomTextField(
-            controller: contentController,
-            labelText: 'Content',
-            maxLines: 5,
-          ),
-        ],
+      body: Form(
+        key: formKey,
+        child: Column(
+          children: [
+            const SizedBox(height: 30),
+            CustomTextField(
+              controller: titleController,
+              labelText: 'Title',
+              validate: (p0) {
+                if (p0!.isEmpty) {
+                  return 'Title Must Not Be Empty';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: 16),
+            CustomTextField(
+              controller: contentController,
+              labelText: 'Content',
+              maxLines: 5,
+              validate: (p0) {
+                if (p0!.isEmpty) {
+                  return 'Content Must Not Be Empty';
+                }
+                return null;
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
