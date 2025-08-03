@@ -14,6 +14,13 @@ final class NotesCubitSuccess extends NotesCubitState {
   const NotesCubitSuccess(this.notes);
 }
 
+final class NotesActionInProgress extends NotesCubitState {}
+
+final class NotesActionSuccess extends NotesCubitState {
+  final String message;
+  const NotesActionSuccess(this.message);
+}
+
 final class NotesCubitError extends NotesCubitState {
   final String message;
   const NotesCubitError(this.message);
