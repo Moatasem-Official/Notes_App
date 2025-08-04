@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       create: (context) => NotesCubit(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(brightness: Brightness.dark),
+        theme: ThemeData(brightness: Brightness.dark, fontFamily: 'Poppins'),
         home: const HomeScreen(),
       ),
     );
