@@ -1,90 +1,231 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note_app/bussines_logic/cubits/cubit/notes_cubit.dart';
-import 'package:note_app/presentation/widgets/Home_Screen/custom_add_note_button.dart';
+import 'package:note_app/data/models/note_model.dart';
 import 'package:note_app/presentation/widgets/custom_text_field.dart';
 
-class CustomBottomSheetContent extends StatelessWidget {
-  const CustomBottomSheetContent({
-    super.key,
-    required this.titleController,
-    required this.contentController,
-    required this.formKey,
-    required this.titleValidate,
-    required this.contentValidate,
-  });
+// نفس قائمة الألوان التي استخدمناها من قبل
+const List<Color> kNoteColors = [
+  Color(0xff4A4E69),
+  Color(0xff9A8C98),
+  Color(0xffC9ADA7),
+  Color(0xffF2E9E4),
+  Color(0xff22223B),
+  Color(0xff4A7C59),
+  Color(0xffA68A64),
+  Color(0xff585123),
+];
 
-  final TextEditingController titleController;
-  final TextEditingController contentController;
-  final GlobalKey<FormState> formKey;
-  final String? Function(String?) titleValidate;
-  final String? Function(String?) contentValidate;
+// تم تحويله إلى StatefulWidget لإدارة حالة اللون المختار
+class CustomBottomSheetContent extends StatefulWidget {
+  const CustomBottomSheetContent({super.key});
+
+  @override
+  State<CustomBottomSheetContent> createState() =>
+      _CustomBottomSheetContentState();
+}
+
+class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _contentController = TextEditingController();
+
+  // متغير لتخزين قيمة اللون الذي يختاره المستخدم
+  int _selectedColorValue = kNoteColors.first.value;
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _contentController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<NotesCubit, NotesCubitState>(
       listener: (context, state) {
         if (state is NotesActionSuccess) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(state.message)));
+          // جلب كل الملاحظات بعد الإضافة لضمان تحديث الواجهة الرئيسية
+          BlocProvider.of<NotesCubit>(context).getNotes();
           Navigator.pop(context);
-        } else if (state is NotesCubitError) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(state.message)));
+        } else if (state is NotesActionError) {
+          // تم تصحيح اسم الحالة
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+              backgroundColor: Colors.redAccent,
+            ),
+          );
         }
       },
       builder: (context, state) {
+        final isLoading = state is NotesCubitLoading;
         return AbsorbPointer(
-          absorbing: state is NotesCubitLoading ? true : false,
+          absorbing: isLoading,
           child: Padding(
             padding: EdgeInsets.only(
               left: 16.0,
               right: 16.0,
               top: 16.0,
+              // هذا الجزء مهم لرفع المحتوى فوق لوحة المفاتيح
               bottom: MediaQuery.of(context).viewInsets.bottom,
             ),
-            child: Form(
-              key: formKey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'Add New Note',
-                    style: TextStyle(
-                      color: Colors.deepPurple,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
+            child: SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // المقبض الجمالي (Grabber)
+                    Container(
+                      width: 50,
+                      height: 5,
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade300,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 30),
-                  CustomTextField(
-                    labelText: 'Title',
-                    controller: titleController,
-                    validate: titleValidate,
-                  ),
-                  const SizedBox(height: 16),
-                  CustomTextField(
-                    labelText: 'Content',
-                    maxLines: 5,
-                    controller: contentController,
-                    validate: contentValidate,
-                  ),
-                  const SizedBox(height: 20),
-                  CustomAddNoteButton(
-                    formKey: formKey,
-                    titleController: titleController,
-                    contentController: contentController,
-                    isLoading: state is NotesCubitLoading ? true : false,
-                  ),
-                  const SizedBox(height: 20),
-                ],
+                    const SizedBox(height: 24),
+
+                    // حقول النص بالتصميم الجديد
+                    CustomTextField(
+                      labelText: 'Title',
+                      controller: _titleController,
+                      validate: (value) => value?.isEmpty ?? true
+                          ? 'Title cannot be empty'
+                          : null,
+                    ),
+                    const SizedBox(height: 16),
+                    CustomTextField(
+                      labelText: 'Content',
+                      maxLines: 5,
+                      controller: _contentController,
+                      validate: (value) => value?.isEmpty ?? true
+                          ? 'Content cannot be empty'
+                          : null,
+                    ),
+                    const SizedBox(height: 24),
+
+                    // لوحة الألوان التفاعلية
+                    _buildColorPalette(),
+
+                    const SizedBox(height: 32),
+
+                    // زر الإضافة بالتصميم الجديد
+                    _buildAddButton(isLoading),
+
+                    const SizedBox(height: 20),
+                  ],
+                ),
               ),
             ),
           ),
         );
       },
     );
+  }
+
+  Widget _buildColorPalette() {
+    return SizedBox(
+      height: 38,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: kNoteColors.length,
+        itemBuilder: (context, index) {
+          final color = kNoteColors[index];
+          final bool isSelected = _selectedColorValue == color.value;
+          return GestureDetector(
+            onTap: () {
+              setState(() {
+                _selectedColorValue = color.value;
+              });
+            },
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 250),
+              margin: const EdgeInsets.symmetric(horizontal: 5),
+              width: 38,
+              height: 38,
+              decoration: BoxDecoration(
+                color: color,
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: isSelected ? Colors.deepPurple : Colors.grey.shade400,
+                  width: isSelected ? 2.5 : 1.5,
+                ),
+              ),
+              child: isSelected
+                  ? Icon(
+                      Icons.check,
+                      color: isDarkColor(color) ? Colors.white : Colors.black,
+                      size: 20,
+                    )
+                  : null,
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildAddButton(bool isLoading) {
+    return SizedBox(
+      width: double.infinity,
+      height: 50,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.zero, // لإزالة الحشو الداخلي الافتراضي
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          elevation: 2,
+        ),
+        onPressed: () {
+          if (_formKey.currentState!.validate()) {
+            final newNote = NoteModel(
+              title: _titleController.text,
+              content: _contentController.text,
+              date: DateTime.now().toIso8601String(),
+              color: _selectedColorValue,
+            );
+            BlocProvider.of<NotesCubit>(context).addNote(newNote);
+          }
+        },
+        child: Ink(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            gradient: const LinearGradient(
+              colors: [Colors.deepPurple, Color(0xFF8168DD)],
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+            ),
+          ),
+          child: Container(
+            alignment: Alignment.center,
+            child: isLoading
+                ? const SizedBox(
+                    width: 24,
+                    height: 24,
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                      strokeWidth: 3,
+                    ),
+                  )
+                : const Text(
+                    'Add Note',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // دالة مساعدة لتحديد إذا كان اللون غامقًا أم فاتحًا
+  bool isDarkColor(Color color) {
+    return color.computeLuminance() < 0.5;
   }
 }

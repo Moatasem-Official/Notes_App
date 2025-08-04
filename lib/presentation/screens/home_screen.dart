@@ -36,23 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
             isScrollControlled: true,
             context: context,
             builder: (context) {
-              return CustomBottomSheetContent(
-                titleController: titleController,
-                contentController: contentController,
-                formKey: formKey,
-                titleValidate: (p0) {
-                  if (p0!.isEmpty) {
-                    return 'Title Must Not Be Empty';
-                  }
-                  return null;
-                },
-                contentValidate: (p0) {
-                  if (p0!.isEmpty) {
-                    return 'Content Must Not Be Empty';
-                  }
-                  return null;
-                },
-              );
+              return CustomBottomSheetContent();
             },
           );
         },
