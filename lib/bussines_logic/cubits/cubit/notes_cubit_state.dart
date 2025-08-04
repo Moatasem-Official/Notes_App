@@ -19,6 +19,17 @@ final class NotesActionInProgress extends NotesCubitState {}
 final class NotesActionSuccess extends NotesCubitState {
   final String message;
   const NotesActionSuccess(this.message);
+
+  @override
+  List<Object> get props => [message];
+}
+
+final class NotesSearchActionSuccess extends NotesCubitState {
+  final List<NoteModel> filteredNotes;
+  const NotesSearchActionSuccess(this.filteredNotes);
+
+  @override
+  List<Object> get props => [filteredNotes];
 }
 
 final class NotesActionError extends NotesCubitState {

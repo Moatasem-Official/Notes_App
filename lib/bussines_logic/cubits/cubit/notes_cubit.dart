@@ -56,4 +56,17 @@ class NotesCubit extends Cubit<NotesCubitState> {
       emit(NotesActionError("فشل في التحديث"));
     }
   }
+
+  Future<void> searchNotes(String query) async {
+    emit(NotesCubitLoading());
+    var notesBox = Hive.box<NoteModel>('notes_box');
+    var searchResults = notesBox.values
+        .where(
+          (note) =>
+              note.title.toLowerCase().contains(query) ||
+              note.content.toLowerCase().contains(query),
+        )
+        .toList();
+    emit(NotesSearchActionSuccess(searchResults));
+  }
 }

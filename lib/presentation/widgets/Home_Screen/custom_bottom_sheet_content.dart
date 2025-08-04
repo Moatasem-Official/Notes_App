@@ -4,7 +4,6 @@ import 'package:note_app/bussines_logic/cubits/cubit/notes_cubit.dart';
 import 'package:note_app/data/models/note_model.dart';
 import 'package:note_app/presentation/widgets/custom_text_field.dart';
 
-// نفس قائمة الألوان التي استخدمناها من قبل
 const List<Color> kNoteColors = [
   Color(0xff4A4E69),
   Color(0xff9A8C98),
@@ -16,7 +15,6 @@ const List<Color> kNoteColors = [
   Color(0xff585123),
 ];
 
-// تم تحويله إلى StatefulWidget لإدارة حالة اللون المختار
 class CustomBottomSheetContent extends StatefulWidget {
   const CustomBottomSheetContent({super.key});
 
@@ -30,7 +28,6 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _contentController = TextEditingController();
 
-  // متغير لتخزين قيمة اللون الذي يختاره المستخدم
   int _selectedColorValue = kNoteColors.first.value;
 
   @override
@@ -45,11 +42,9 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
     return BlocConsumer<NotesCubit, NotesCubitState>(
       listener: (context, state) {
         if (state is NotesActionSuccess) {
-          // جلب كل الملاحظات بعد الإضافة لضمان تحديث الواجهة الرئيسية
           BlocProvider.of<NotesCubit>(context).getNotes();
           Navigator.pop(context);
         } else if (state is NotesActionError) {
-          // تم تصحيح اسم الحالة
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.message),
@@ -67,7 +62,6 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
               left: 16.0,
               right: 16.0,
               top: 16.0,
-              // هذا الجزء مهم لرفع المحتوى فوق لوحة المفاتيح
               bottom: MediaQuery.of(context).viewInsets.bottom,
             ),
             child: SingleChildScrollView(
@@ -76,7 +70,6 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // المقبض الجمالي (Grabber)
                     Container(
                       width: 50,
                       height: 5,
@@ -87,7 +80,6 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
                     ),
                     const SizedBox(height: 24),
 
-                    // حقول النص بالتصميم الجديد
                     CustomTextField(
                       labelText: 'Title',
                       controller: _titleController,
@@ -106,12 +98,10 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
                     ),
                     const SizedBox(height: 24),
 
-                    // لوحة الألوان التفاعلية
                     _buildColorPalette(),
 
                     const SizedBox(height: 32),
 
-                    // زر الإضافة بالتصميم الجديد
                     _buildAddButton(isLoading),
 
                     const SizedBox(height: 20),
@@ -173,7 +163,7 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
       height: 50,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.zero, // لإزالة الحشو الداخلي الافتراضي
+          padding: EdgeInsets.zero,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -224,7 +214,6 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
     );
   }
 
-  // دالة مساعدة لتحديد إذا كان اللون غامقًا أم فاتحًا
   bool isDarkColor(Color color) {
     return color.computeLuminance() < 0.5;
   }
