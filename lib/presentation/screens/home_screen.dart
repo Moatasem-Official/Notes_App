@@ -34,7 +34,11 @@ class _HomeScreenState extends State<HomeScreen> {
           icon: Icons.search,
           onTap: () => Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => SearchScreen()),
+            MaterialPageRoute(
+              builder: (context) => SearchScreen(
+                allNotes: BlocProvider.of<NotesCubit>(context).allNotes,
+              ),
+            ),
           ),
         ),
       ),

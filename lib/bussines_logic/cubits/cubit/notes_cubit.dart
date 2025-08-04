@@ -8,6 +8,8 @@ part 'notes_cubit_state.dart';
 class NotesCubit extends Cubit<NotesCubitState> {
   NotesCubit() : super(NotesCubitInitial());
 
+  List<NoteModel> allNotes = [];
+
   Future<void> addNote(NoteModel note) async {
     emit(NotesActionInProgress());
     try {
@@ -26,7 +28,8 @@ class NotesCubit extends Cubit<NotesCubitState> {
     emit(NotesCubitLoading());
     try {
       var notesBox = Hive.box<NoteModel>('notes_box');
-      emit(NotesCubitSuccess(List.from(notesBox.values)));
+      allNotes = List.from(notesBox.values);
+      emit(NotesCubitSuccess(allNotes));
     } catch (e) {
       emit(NotesCubitError("فشل في جلب البيانات"));
     }
