@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           );
         },
-        child: Icon(Icons.add, color: Colors.black),
+        child: Icon(Icons.add, color: Colors.white),
       ),
       body: SingleChildScrollView(
         child: BlocConsumer<NotesCubit, NotesCubitState>(
