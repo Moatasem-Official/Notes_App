@@ -1,10 +1,7 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:note_app/bussines_logic/cubits/cubit/notes_cubit.dart';
-import 'package:note_app/data/models/note_model.dart';
+import 'package:note_app/presentation/widgets/Home_Screen/custom_add_note_button.dart';
 import 'package:note_app/presentation/widgets/custom_text_field.dart';
 
 class CustomBottomSheetContent extends StatelessWidget {
@@ -39,8 +36,8 @@ class CustomBottomSheetContent extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        return ModalProgressHUD(
-          inAsyncCall: state is NotesCubitLoading ? true : false,
+        return AbsorbPointer(
+          absorbing: state is NotesCubitLoading ? true : false,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24),
             child: Form(
@@ -70,42 +67,11 @@ class CustomBottomSheetContent extends StatelessWidget {
                     validate: contentValidate,
                   ),
                   const SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16, right: 16),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(16)),
-                      child: MaterialButton(
-                        color: Colors.deepPurple,
-                        minWidth: double.infinity,
-                        onPressed: () async {
-                          List<int> colors = [
-                            0xFFEF5350, // Red
-                            0xFFFFA726, // Orange
-                            0xFFFFEE58, // Yellow
-                            0xFF66BB6A, // Green
-                            0xFF42A5F5, // Blue
-                            0xFFAB47BC, // Purple
-                            0xFF26C6DA, // Cyan
-                            0xFF8D6E63, // Brown
-                            0xFFBDBDBD, // Grey
-                          ];
-
-                          if (formKey.currentState!.validate()) {
-                            final note = NoteModel(
-                              title: titleController.text,
-                              content: contentController.text,
-                              date: DateTime.now().toString(),
-                              color: colors[Random().nextInt(colors.length)],
-                            );
-                            await context.read<NotesCubit>().addNote(note);
-                          }
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text('Add Note'),
-                        ),
-                      ),
-                    ),
+                  CustomAddNoteButton(
+                    formKey: formKey,
+                    titleController: titleController,
+                    contentController: contentController,
+                    isLoading: state is NotesCubitLoading ? true : false,
                   ),
                 ],
               ),
