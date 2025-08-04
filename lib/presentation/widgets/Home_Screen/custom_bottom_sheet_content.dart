@@ -39,7 +39,12 @@ class CustomBottomSheetContent extends StatelessWidget {
         return AbsorbPointer(
           absorbing: state is NotesCubitLoading ? true : false,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24),
+            padding: EdgeInsets.only(
+              left: 16.0,
+              right: 16.0,
+              top: 16.0,
+              bottom: MediaQuery.of(context).viewInsets.bottom,
+            ),
             child: Form(
               key: formKey,
               child: Column(
@@ -73,6 +78,7 @@ class CustomBottomSheetContent extends StatelessWidget {
                     contentController: contentController,
                     isLoading: state is NotesCubitLoading ? true : false,
                   ),
+                  const SizedBox(height: 20),
                 ],
               ),
             ),
