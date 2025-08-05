@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: PreferredSize(
         preferredSize: Size(double.infinity, 60),
         child: CustomAppBar(
-          title: 'Notes',
+          title: 'Nota',
           icon: Icons.search,
           onTap: () => Navigator.push(
             context,
