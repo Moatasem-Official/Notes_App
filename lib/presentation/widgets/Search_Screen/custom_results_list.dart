@@ -7,10 +7,7 @@ import '../../screens/edit_note_screen.dart';
 import '../Home_Screen/Note_Card/custom_note_card.dart';
 
 class CustomResultsList extends StatelessWidget {
-  const CustomResultsList({
-    super.key,
-    required this.filteredNotes,
-  });
+  const CustomResultsList({super.key, required this.filteredNotes});
 
   final List<NoteModel> filteredNotes;
 

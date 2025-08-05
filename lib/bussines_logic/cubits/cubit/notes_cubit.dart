@@ -72,6 +72,5 @@ class NotesCubit extends Cubit<NotesCubitState> {
         )
         .toList();
     emit(NotesSearchActionSuccess(searchResults));
-    emit(NotesCubitSuccess(searchResults));
   }
 }
