@@ -3,10 +3,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:note_app/presentation/screens/splash_screen.dart';
 import 'bloc_observer.dart';
 import 'bussines_logic/cubits/cubit/notes_cubit.dart';
 import 'data/models/note_model.dart';
-import 'presentation/screens/home_screen.dart';
 
 void main() async {
   Bloc.observer = BlocObserverClass();
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(brightness: Brightness.dark, fontFamily: 'Poppins'),
-        home: const HomeScreen(),
+        home: const SplashScreen(),
       ),
     );
   }
