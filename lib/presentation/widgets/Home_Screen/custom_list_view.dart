@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note_app/bussines_logic/cubits/cubit/notes_cubit.dart';
 import 'package:note_app/data/models/note_model.dart';
 import 'package:note_app/presentation/screens/edit_note_screen.dart';
-import 'package:note_app/presentation/widgets/Home_Screen/custom_note_card.dart';
+import 'package:note_app/presentation/widgets/Home_Screen/Note_Card/custom_note_card.dart';
 
 class CustomListView extends StatelessWidget {
   const CustomListView({super.key, required this.noteItems});
