@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:note_app/bussines_logic/cubits/cubit/notes_cubit.dart';
-import 'package:note_app/data/models/note_model.dart';
+import '../../../bussines_logic/cubits/cubit/notes_cubit.dart';
+import '../../../data/models/note_model.dart';
 
 class CustomAddNoteButton extends StatelessWidget {
   const CustomAddNoteButton({

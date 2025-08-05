@@ -1,7 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:note_app/data/models/note_model.dart';
+
+import '../../../data/models/note_model.dart';
 
 part 'notes_cubit_state.dart';
 

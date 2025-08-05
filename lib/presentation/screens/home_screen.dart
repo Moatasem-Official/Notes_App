@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:note_app/bussines_logic/cubits/cubit/notes_cubit.dart';
-import 'package:note_app/presentation/screens/search_notes_screen.dart';
-import 'package:note_app/presentation/widgets/Home_Screen/custom_bottom_sheet_content.dart';
-import 'package:note_app/presentation/widgets/Home_Screen/custom_list_view.dart';
-import 'package:note_app/presentation/widgets/custom_app_bar.dart';
+import '../../bussines_logic/cubits/cubit/notes_cubit.dart';
+import 'search_notes_screen.dart';
+import '../widgets/Home_Screen/custom_bottom_sheet_content.dart';
+import '../widgets/Home_Screen/custom_list_view.dart';
+import '../widgets/custom_app_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

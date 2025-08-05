@@ -3,10 +3,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:note_app/bloc_observer.dart';
-import 'package:note_app/bussines_logic/cubits/cubit/notes_cubit.dart';
-import 'package:note_app/data/models/note_model.dart';
-import 'package:note_app/presentation/screens/home_screen.dart';
+import 'bloc_observer.dart';
+import 'bussines_logic/cubits/cubit/notes_cubit.dart';
+import 'data/models/note_model.dart';
+import 'presentation/screens/home_screen.dart';
 
 void main() async {
   Bloc.observer = BlocObserverClass();

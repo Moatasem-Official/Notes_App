@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:note_app/bussines_logic/cubits/cubit/notes_cubit.dart';
-import 'package:note_app/data/models/note_model.dart';
-import 'package:note_app/presentation/widgets/custom_text_field.dart';
+import '../../../bussines_logic/cubits/cubit/notes_cubit.dart';
+import '../../../data/models/note_model.dart';
+import '../custom_text_field.dart';
 
 const List<Color> kNoteColors = [
   Color(0xff4A4E69),

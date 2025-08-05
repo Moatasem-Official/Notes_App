@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:note_app/presentation/widgets/Home_Screen/Note_Card/custom_card_footer.dart';
-import 'package:note_app/presentation/widgets/Home_Screen/Note_Card/helper_functions.dart';
+import 'custom_card_footer.dart';
+import 'helper_functions.dart';
 
 class CustomCardContainer extends StatelessWidget {
   const CustomCardContainer({

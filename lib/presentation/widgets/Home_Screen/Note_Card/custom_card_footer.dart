@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:note_app/presentation/widgets/Home_Screen/Note_Card/helper_functions.dart';
+import 'helper_functions.dart';
 
 class CustomCardFooter extends StatelessWidget {
   const CustomCardFooter({

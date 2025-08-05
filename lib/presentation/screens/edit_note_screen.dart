@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:note_app/bussines_logic/cubits/cubit/notes_cubit.dart';
-import 'package:note_app/data/models/note_model.dart';
-import 'package:note_app/presentation/widgets/Edit_Note_Screen/custom_app_bar.dart';
-import 'package:note_app/presentation/widgets/Edit_Note_Screen/custom_color_palette.dart';
-import 'package:note_app/presentation/widgets/Edit_Note_Screen/custom_content_text_field.dart';
-import 'package:note_app/presentation/widgets/Edit_Note_Screen/custom_text_field.dart';
+import '../../bussines_logic/cubits/cubit/notes_cubit.dart';
+import '../../data/models/note_model.dart';
+import '../widgets/Edit_Note_Screen/custom_app_bar.dart';
+import '../widgets/Edit_Note_Screen/custom_color_palette.dart';
+import '../widgets/Edit_Note_Screen/custom_content_text_field.dart';
+import '../widgets/Edit_Note_Screen/custom_text_field.dart';
 
 class EditNoteScreen extends StatefulWidget {
   const EditNoteScreen({super.key, required this.note});

@@ -26,6 +26,7 @@ class CustomSearchBar extends StatelessWidget {
             onPressed: () => Navigator.pop(context),
           ),
         ),
+        const SizedBox(width: 8),
         Expanded(
           child: Padding(
             padding: const EdgeInsets.only(right: 16),

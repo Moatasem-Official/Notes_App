@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:note_app/bussines_logic/cubits/cubit/notes_cubit.dart';
-import 'package:note_app/data/models/note_model.dart';
-import 'package:note_app/presentation/widgets/Home_Screen/custom_list_view.dart';
-import 'package:note_app/presentation/widgets/Search_Screen/custom_no_results_view.dart';
-import 'package:note_app/presentation/widgets/Search_Screen/custom_results_list.dart';
-import 'package:note_app/presentation/widgets/Search_Screen/custom_search_bar.dart';
+import '../../bussines_logic/cubits/cubit/notes_cubit.dart';
+import '../../data/models/note_model.dart';
+import '../widgets/Home_Screen/custom_list_view.dart';
+import '../widgets/Search_Screen/custom_no_results_view.dart';
+import '../widgets/Search_Screen/custom_results_list.dart';
+import '../widgets/Search_Screen/custom_search_bar.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key, required this.allNotes});

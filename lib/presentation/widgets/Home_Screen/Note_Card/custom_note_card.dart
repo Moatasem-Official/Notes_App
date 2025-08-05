@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:note_app/presentation/widgets/Home_Screen/Note_Card/custom_card_container.dart';
-import 'package:note_app/presentation/widgets/Home_Screen/Note_Card/helper_functions.dart';
+import 'custom_card_container.dart';
+import 'helper_functions.dart';
 
 class CustomNoteCard extends StatelessWidget {
   final String title;
