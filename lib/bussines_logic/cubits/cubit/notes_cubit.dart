@@ -17,11 +17,11 @@ class NotesCubit extends Cubit<NotesCubitState> {
       var notesBox = Hive.box<NoteModel>('notes_box');
       await notesBox.add(note);
 
-      emit(NotesActionSuccess("تمت الإضافة بنجاح"));
+      emit(NotesActionSuccess("Note Added Successfully"));
 
       emit(NotesCubitSuccess(List.from(notesBox.values)));
     } catch (e) {
-      emit(NotesActionError("فشل في الإضافة"));
+      emit(NotesActionError("Failed To Add Note"));
     }
   }
 
@@ -32,7 +32,7 @@ class NotesCubit extends Cubit<NotesCubitState> {
       allNotes = List.from(notesBox.values);
       emit(NotesCubitSuccess(allNotes));
     } catch (e) {
-      emit(NotesCubitError("فشل في جلب البيانات"));
+      emit(NotesCubitError("Failed To Get Notes"));
     }
   }
 
@@ -41,23 +41,23 @@ class NotesCubit extends Cubit<NotesCubitState> {
     try {
       var notesBox = Hive.box<NoteModel>('notes_box');
       await notesBox.delete(note.key);
-      emit(NotesActionSuccess("تم الحذف بنجاح"));
+      emit(NotesActionSuccess("Note Deleted Successfully"));
       emit(NotesCubitSuccess(List.from(notesBox.values)));
     } catch (e) {
-      emit(NotesActionError("فشل في الحذف"));
+      emit(NotesActionError("Failed To Delete Note"));
     }
   }
 
   Future<void> updateNote(NoteModel note) async {
     emit(NotesActionInProgress());
     try {
-      await note.save(); // ✅ يحدث النوت مباشرة
-      emit(NotesActionSuccess("تم التحديث بنجاح"));
+      await note.save();
+      emit(NotesActionSuccess("Note Updated Successfully"));
       emit(
         NotesCubitSuccess(List.from(Hive.box<NoteModel>('notes_box').values)),
       );
     } catch (e) {
-      emit(NotesActionError("فشل في التحديث"));
+      emit(NotesActionError("Failed To Update Note"));
     }
   }
 
@@ -72,5 +72,6 @@ class NotesCubit extends Cubit<NotesCubitState> {
         )
         .toList();
     emit(NotesSearchActionSuccess(searchResults));
+    emit(NotesCubitSuccess(searchResults));
   }
 }

@@ -40,7 +40,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     context.read<NotesCubit>().searchNotes(query.toLowerCase()),
               ),
               const SizedBox(height: 20),
-              Expanded(child: _buildContentBody()),
+              _buildContentBody(),
             ],
           ),
         ),

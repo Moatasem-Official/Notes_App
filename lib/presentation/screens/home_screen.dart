@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:note_app/data/helpers/helper_functions.dart';
 import '../../bussines_logic/cubits/cubit/notes_cubit.dart';
 import 'search_notes_screen.dart';
 import '../widgets/Home_Screen/custom_bottom_sheet_content.dart';
@@ -58,9 +61,21 @@ class _HomeScreenState extends State<HomeScreen> {
         child: BlocConsumer<NotesCubit, NotesCubitState>(
           listener: (context, state) {
             if (state is NotesActionSuccess) {
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(SnackBar(content: Text(state.message)));
+              Get.showSnackbar(
+                HelperFunctions.customAppSnackBar(
+                  message: state.message,
+                  color: Colors.green,
+                  icon: Icons.check,
+                ),
+              );
+            } else if (state is NotesActionError) {
+              Get.showSnackbar(
+                HelperFunctions.customAppSnackBar(
+                  message: state.message,
+                  color: Colors.red,
+                  icon: Icons.error,
+                ),
+              );
             }
           },
           builder: (context, state) {
@@ -69,18 +84,33 @@ class _HomeScreenState extends State<HomeScreen> {
             } else if (state is NotesCubitSuccess) {
               if (state.notes.isEmpty) {
                 return SizedBox(
-                  height: MediaQuery.of(context).size.height - 100,
-                  child: const Center(child: Text('Start Adding Notes Now !')),
+                  height: MediaQuery.of(context).size.height - 200,
+                  width: double.infinity,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        'assets/images/Notes-amico.svg',
+                        height: 300,
+                      ),
+                      const SizedBox(height: 24),
+                      const Text(
+                        'Start Adding Notes Now',
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                 );
               } else {
                 return CustomListView(noteItems: state.notes);
               }
-            } else if (state is NotesCubitInitial) {
-              return Center(child: Text('لا توجد ملاحظات بعد'));
             } else if (state is NotesCubitError) {
               return Center(child: Text('خطأ في تحميل الملاحظات'));
             } else {
-              // ده عشان لو الحالة هي Action مؤقتة زي success أو error مش تعرض حاجة غلط
               return SizedBox.shrink();
             }
           },
