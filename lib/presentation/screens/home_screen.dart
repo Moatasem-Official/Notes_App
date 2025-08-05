@@ -35,14 +35,18 @@ class _HomeScreenState extends State<HomeScreen> {
         child: CustomAppBar(
           title: 'Nota',
           icon: Icons.search,
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => SearchScreen(
-                allNotes: BlocProvider.of<NotesCubit>(context).allNotes,
+          onTap: () async {
+            await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SearchScreen(
+                  allNotes: BlocProvider.of<NotesCubit>(context).allNotes,
+                ),
               ),
-            ),
-          ),
+            );
+
+            BlocProvider.of<NotesCubit>(context).getNotes();
+          },
         ),
       ),
       floatingActionButton: FloatingActionButton(
