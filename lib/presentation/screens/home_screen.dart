@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:note_app/data/helpers/helper_functions.dart';
 import '../../bussines_logic/cubits/cubit/notes_cubit.dart';
 import 'search_notes_screen.dart';
-import '../widgets/Home_Screen/custom_bottom_sheet_content.dart';
+import '../widgets/Home_Screen/Bottom_Sheet/custom_bottom_sheet_content.dart';
 import '../widgets/Home_Screen/custom_list_view.dart';
 import '../widgets/custom_app_bar.dart';
 
